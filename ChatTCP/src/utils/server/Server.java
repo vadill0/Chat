@@ -1,4 +1,11 @@
 package utils.server;
 
-public class Server {
+public class Server implements Runnable{
+    public Server(){
+        
+    }
+    @Override
+    public void run() {
+
+    }
 }
