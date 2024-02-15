@@ -26,6 +26,7 @@ public class ClientMain {
             if(!answer.equals("Name already in use")){
                 Client client = new Client(name, socket);
                 Thread thread = new Thread(client);
+                thread.start();
             }else{
              System.exit(-1);
             }

@@ -25,12 +25,8 @@ public class Client implements Runnable {
     }
     @Override
     public void run() {
-        ClientGui clientGui = new ClientGui();
+        ClientGui clientGui = new ClientGui(this.name);
         clientGui.setName(this.name + "'s chat");
-        clientGui.setSize(420, 420);
-        clientGui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        clientGui.setResizable(false);
-        clientGui.setVisible(true);
 
     }
 }
