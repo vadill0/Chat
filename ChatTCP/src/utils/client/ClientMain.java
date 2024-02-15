@@ -1,10 +1,7 @@
 package utils.client;
 
-import gui.ClientGui;
-import utils.server.Server;
-
 import javax.swing.*;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -17,15 +14,27 @@ public class ClientMain {
             socket = new Socket("localhost", port);
             System.out.println("Conectado a " + port);
 
+            //Login Form
+            String name = JOptionPane.showInputDialog(null, "Choose your username", "Log In", JOptionPane.PLAIN_MESSAGE);
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            bufferedWriter.write(name);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String answer = bufferedReader.readLine();
+            JOptionPane.showMessageDialog(null, answer);
+            //Name Check
+            if(!answer.equals("Name already in use")){
+                Client client = new Client(name, socket);
+                Thread thread = new Thread(client);
+            }else{
+             System.exit(-1);
+            }
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //Formulario de entrada
-        //String name = JOptionPane.showInputDialog(null, "Choose your username", "Log In", JOptionPane.PLAIN_MESSAGE);
 
-        //ClientGui clientGui = new ClientGui();
 
     }
 }

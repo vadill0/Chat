@@ -36,17 +36,6 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="b8002" class="javax.swing.JLabel" binding="nameLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <name value=""/>
-          <opaque value="true"/>
-          <requestFocusEnabled value="false"/>
-          <text value=""/>
-        </properties>
-      </component>
       <scrollpane id="a780d" binding="textScrollPanel">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
@@ -72,6 +61,11 @@
           </component>
         </children>
       </scrollpane>
+      <hspacer id="52995">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
     </children>
   </grid>
 </form>
