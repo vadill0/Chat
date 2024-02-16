@@ -5,37 +5,35 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable{
     private Socket socket;
-    private InputStreamReader isr;
-    private OutputStreamWriter osr;
+    private DataInputStream dis;
+    private DataOutputStream dos;
     public ClientHandler(Socket socket){
         this.socket = socket;
         try {
-            isr = new InputStreamReader(socket.getInputStream());
-            osr = new OutputStreamWriter(socket.getOutputStream());
+            dis = new DataInputStream(socket.getInputStream());
+            dos = new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     @Override
     public void run() {
-        BufferedReader bufferedReader = new BufferedReader(isr);
         try {
             //Recieve username
-            String clientName = bufferedReader.readLine();
-
+            String clientName = dis.readUTF();
             //Username check
             if(ServerMain.checkClients(clientName)){
                 ServerMain.addClient(clientName);
-                osr.write(clientName + " Joined the chat");
+                dos.writeUTF(clientName + " Joined the chat");
             }else{
-                osr.write("Name already in use");
+                dos.writeUTF("Name already in use");
                 socket.close();
                 System.exit(0);
             }
 
             //Chat
             while (true){
-                String msg = bufferedReader.readLine();
+                String msg = dis.readUTF();
                 ServerMain.sendMessage(clientName, msg);
             }
         } catch (IOException e) {
@@ -46,7 +44,7 @@ public class ClientHandler implements Runnable{
     //Gives format to then display in JScrollPane
     public void messageFormatter(String clientName, String msg){
         try {
-            osr.write(clientName + " : " + msg);
+            dos.writeUTF(clientName + " : " + msg);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

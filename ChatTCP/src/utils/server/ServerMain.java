@@ -19,6 +19,7 @@ public class ServerMain {
                 ClientHandler clientHandler = new ClientHandler(socket);
                 HANDLERS.add(clientHandler);
                 Thread thread = new Thread(clientHandler);
+                thread.start();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

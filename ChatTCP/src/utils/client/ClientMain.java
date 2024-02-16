@@ -17,10 +17,10 @@ public class ClientMain {
             //Login Form
             String name = JOptionPane.showInputDialog(null, "Choose your username", "Log In", JOptionPane.PLAIN_MESSAGE);
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            bufferedWriter.write(name);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String answer = bufferedReader.readLine();
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF(name);
+            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+            String answer = dataInputStream.readUTF();
             JOptionPane.showMessageDialog(null, answer);
             //Name Check
             if(!answer.equals("Name already in use")){
