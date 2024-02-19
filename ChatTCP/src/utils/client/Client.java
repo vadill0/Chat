@@ -3,22 +3,20 @@ package utils.client;
 import gui.ClientGui;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class Client implements Runnable {
     private String name;
     private Socket socket;
-    private InputStreamReader isr;
-    private OutputStreamWriter osr;
+    private DataInputStream dis;
+    private DataOutputStream dos;
     public Client(String name, Socket socket){
         this.name = name;
         this.socket = socket;
         try {
-            isr = new InputStreamReader(socket.getInputStream());
-            osr = new OutputStreamWriter(socket.getOutputStream());
+            dis = new DataInputStream(socket.getInputStream());
+            dos = new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -27,6 +25,8 @@ public class Client implements Runnable {
     public void run() {
         ClientGui clientGui = new ClientGui(this.name);
         clientGui.setName(this.name + "'s chat");
+        while(true){
 
+        }
     }
 }

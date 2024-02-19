@@ -1,5 +1,6 @@
 package gui;
 
+import utils.server.ClientHandler;
 import utils.server.ServerMain;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class ClientGui extends JFrame{
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ServerMain.sendMessage(clientName, msgTextArea.getText());
+                
             }
         });
     }
