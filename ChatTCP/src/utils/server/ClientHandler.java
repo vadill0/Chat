@@ -22,13 +22,13 @@ public class ClientHandler implements Runnable{
             //Recieve username
             String clientName = dis.readUTF();
             //Username check
-            if(ServerMain.checkClients(clientName)){
-                ServerMain.addClient(clientName);
+            if(ServerMain.checkClients(clientName, this)){
+                ServerMain.addClient(clientName, this);
                 dos.writeUTF(clientName + " Joined the chat");
             }else{
                 dos.writeUTF("Name already in use");
                 socket.close();
-                System.exit(0);
+
             }
 
             //Chat
@@ -37,7 +37,7 @@ public class ClientHandler implements Runnable{
                 ServerMain.sendMessage(clientName, msg);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Client disconnected");
         }
     }
 
