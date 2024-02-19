@@ -34,7 +34,8 @@ public class ClientHandler implements Runnable{
             //Chat
             while (true){
                 String msg = dis.readUTF();
-                ServerMain.sendMessage(clientName, msg);
+                //
+                messageFormatter(clientName, msg);
             }
         } catch (IOException e) {
             System.err.println("Client disconnected");

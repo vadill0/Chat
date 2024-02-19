@@ -39,10 +39,4 @@ public class ServerMain {
         CLIENTS.remove(clientName);
     }
 
-    //Server's broadcast message
-    public static synchronized void sendMessage(String clientName, String msg){
-        for (ClientHandler clientHandler : CLIENTS.values()){
-            clientHandler.messageFormatter(clientName, msg);
-        }
-    }
 }
