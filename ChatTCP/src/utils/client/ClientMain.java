@@ -18,7 +18,7 @@ public class ClientMain {
             String name = JOptionPane.showInputDialog(null, "Choose your username", "Log In", JOptionPane.PLAIN_MESSAGE);
 
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeUTF(name);
+            sendOffer(name, dataOutputStream);
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             String answer = dataInputStream.readUTF();
             JOptionPane.showMessageDialog(null, answer);
@@ -30,12 +30,18 @@ public class ClientMain {
             }else{
              System.exit(-1);
             }
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
-
+    public static void sendOffer(String userName, DataOutputStream dos){
+        StringBuilder offerString = new StringBuilder("of/");
+        offerString.append(userName);
+        try {
+            dos.writeUTF(String.valueOf(offerString));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

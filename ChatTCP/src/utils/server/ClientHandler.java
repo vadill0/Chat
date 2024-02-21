@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable{
+    private String userName;
     private Socket socket;
     private DataInputStream dis;
     private DataOutputStream dos;
@@ -20,22 +21,28 @@ public class ClientHandler implements Runnable{
     public void run() {
         try {
             //Recieve username
-            String clientName = dis.readUTF();
-            //Username check
-            if(ServerMain.checkClients(clientName, this)){
-                ServerMain.addClient(clientName, this);
-                dos.writeUTF(clientName + " Joined the chat");
-            }else{
-                dos.writeUTF("Name already in use");
-                socket.close();
-
-            }
-
-            //Chat
             while (true){
-                String msg = dis.readUTF();
-                //
-                messageFormatter(clientName, msg);
+                String recievedString = dis.readUTF();
+                if(recievedString.contains("of/")){
+                    //Username check
+                    recievedString = recievedString.substring(3);
+                    System.out.println(recievedString);
+                    if(ServerMain.checkClients(recievedString, this)){
+                        this.userName = recievedString;
+                        ServerMain.addClient(recievedString, this);
+                        dos.writeUTF(recievedString + " Joined the chat");
+                    }else{
+                        dos.writeUTF("Name already in use");
+                        socket.close();
+
+                    }
+                }else if(recievedString.contains("ms/")){
+                    recievedString = recievedString.substring(3);
+                    System.out.println(recievedString);
+
+                    //Chat
+                    messageFormatter(this.userName, recievedString);
+                }
             }
         } catch (IOException e) {
             System.err.println("Client disconnected");

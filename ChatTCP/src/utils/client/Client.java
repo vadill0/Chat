@@ -23,10 +23,17 @@ public class Client implements Runnable {
     }
     @Override
     public void run() {
-        ClientGui clientGui = new ClientGui(this.name);
+        ClientGui clientGui = new ClientGui(this.name, this);
         clientGui.setName(this.name + "'s chat");
-        while(true){
+    }
 
+    public void sendMessage(String msg){
+        StringBuilder stringBuilder = new StringBuilder("ms/");
+        stringBuilder.append(msg);
+        try {
+            dos.writeUTF(String.valueOf(stringBuilder));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
