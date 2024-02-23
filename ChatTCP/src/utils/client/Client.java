@@ -3,8 +3,10 @@ package utils.client;
 import gui.ClientGui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
+import java.util.Random;
 
 public class Client implements Runnable {
     private String name;
@@ -24,7 +26,7 @@ public class Client implements Runnable {
     @Override
     public void run() {
         ClientGui clientGui = new ClientGui(this.name, this);
-        clientGui.setName(this.name + "'s chat");
+        clientGui.setTitle(this.name + "'s chat");
         while (true){
             try {
                 String msgRecieved = "";
