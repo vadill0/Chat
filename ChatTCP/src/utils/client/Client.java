@@ -25,6 +25,19 @@ public class Client implements Runnable {
     public void run() {
         ClientGui clientGui = new ClientGui(this.name, this);
         clientGui.setName(this.name + "'s chat");
+        while (true){
+            try {
+                String msgRecieved = "";
+                if((msgRecieved = dis.readUTF()).startsWith("ms/")){
+                    System.out.println(msgRecieved);
+                    msgRecieved = msgRecieved.substring(3);
+                    clientGui.addMessage(msgRecieved);
+                }
+                clientGui.revalidate();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void sendMessage(String msg){

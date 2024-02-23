@@ -26,25 +26,25 @@ public class ClientHandler implements Runnable{
                 if(recievedString.contains("of/")){
                     //Username check
                     recievedString = recievedString.substring(3);
-                    System.out.println(recievedString);
                     if(ServerMain.checkClients(recievedString, this)){
                         this.userName = recievedString;
-                        ServerMain.addClient(recievedString, this);
-                        dos.writeUTF(recievedString + " Joined the chat");
+                        ServerMain.addClient(this.userName, this);
+                        dos.writeUTF("of/" + this.userName + " joined the chat");
+                        dos.writeUTF("ms/" + this.userName + " joined the chat");
                     }else{
-                        dos.writeUTF("Name already in use");
+                        dos.writeUTF("of/Name already in use");
                         socket.close();
 
                     }
                 }else if(recievedString.contains("ms/")){
+                    //Chat
                     recievedString = recievedString.substring(3);
                     System.out.println(recievedString);
-
-                    //Chat
                     messageFormatter(this.userName, recievedString);
                 }
             }
         } catch (IOException e) {
+            ServerMain.delClient(this.userName);
             System.err.println("Client disconnected");
         }
     }
@@ -52,7 +52,7 @@ public class ClientHandler implements Runnable{
     //Gives format to then display in JScrollPane
     public void messageFormatter(String clientName, String msg){
         try {
-            dos.writeUTF(clientName + " : " + msg);
+            dos.writeUTF("ms/" + clientName + ":" + msg);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

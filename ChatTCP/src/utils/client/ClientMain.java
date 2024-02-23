@@ -20,15 +20,18 @@ public class ClientMain {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             sendOffer(name, dataOutputStream);
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-            String answer = dataInputStream.readUTF();
-            JOptionPane.showMessageDialog(null, answer);
-            //Name Check
-            if(!answer.equals("Name already in use")){
-                Client client = new Client(name, socket);
-                Thread thread = new Thread(client);
-                thread.start();
-            }else{
-             System.exit(-1);
+            //Configure to only read of/ headers
+            String answer = "";
+            while((answer = dataInputStream.readUTF()).contains("of/")){
+                JOptionPane.showMessageDialog(null, answer.substring(3));
+                //Name Check
+                if(!answer.equals("of/Name already in use")){
+                    Client client = new Client(name, socket);
+                    Thread thread = new Thread(client);
+                    thread.start();
+                }else{
+                    System.exit(-1);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

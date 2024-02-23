@@ -5,6 +5,7 @@ import utils.server.ClientHandler;
 import utils.server.ServerMain;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,5 +36,21 @@ public class ClientGui extends JFrame {
                 msgTextArea.setText("");
             }
         });
+    }
+
+    public void addMessage(String messageText) {
+        JPanel messagePanel = new JPanel();
+        messagePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        JLabel messageLabel = new JLabel(messageText);
+
+
+        messagePanel.add(messageLabel);
+
+
+        msgScrollPane.setViewportView(messagePanel);
+
+        msgScrollPane.revalidate();
+        msgScrollPane.getVerticalScrollBar().setValue(msgScrollPane.getVerticalScrollBar().getMaximum());
     }
 }
