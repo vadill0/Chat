@@ -1,5 +1,7 @@
 package utils.server;
 
+import utils.client.Client;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -39,4 +41,15 @@ public class ServerMain {
         CLIENTS.remove(clientName);
     }
 
+    public static void sendBroadcast(String clientName, String msg){
+        for(ClientHandler clientHandler : CLIENTS.values()){
+            clientHandler.messageFormatter(clientName, msg);
+        }
+    }
+
+    public static void greetingBroadcast(String clientName){
+        for(ClientHandler clientHandler : CLIENTS.values()){
+            clientHandler.joinedMessage(clientName);
+        }
+    }
 }

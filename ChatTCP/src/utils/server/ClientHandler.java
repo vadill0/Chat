@@ -30,7 +30,7 @@ public class ClientHandler implements Runnable{
                         this.userName = recievedString;
                         ServerMain.addClient(this.userName, this);
                         dos.writeUTF("of/" + this.userName + " joined the chat");
-                        dos.writeUTF("ms/" + this.userName + " joined the chat");
+                        ServerMain.greetingBroadcast(this.userName);
                     }else{
                         dos.writeUTF("of/Name already in use");
                         socket.close();
@@ -40,7 +40,7 @@ public class ClientHandler implements Runnable{
                     //Chat
                     recievedString = recievedString.substring(3);
                     System.out.println(recievedString);
-                    messageFormatter(this.userName, recievedString);
+                    ServerMain.sendBroadcast(this.userName, recievedString);
                 }
             }
         } catch (IOException e) {
@@ -52,7 +52,16 @@ public class ClientHandler implements Runnable{
     //Gives format to then display in JScrollPane
     public void messageFormatter(String clientName, String msg){
         try {
-            dos.writeUTF("ms/" + clientName + ":" + msg);
+            dos.writeUTF("ms/" + clientName + ": " + msg);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Joined notification
+    public void joinedMessage(String clientName){
+        try {
+            dos.writeUTF("ms/" + clientName + " joined the chat");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
