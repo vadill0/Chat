@@ -17,6 +17,7 @@ public class ClientGui extends JFrame {
     private JScrollPane msgScrollPane;
     private JTextArea msgTextArea;
     private JScrollPane textScrollPanel;
+    private JPanel messagePanel;
 
     public ClientGui(String clientName, Client client) {
         setSize(420, 420);
@@ -27,6 +28,8 @@ public class ClientGui extends JFrame {
         setLocationRelativeTo(null);
         this.clientName = clientName;
         this.client = client;
+
+        messagePanel = new JPanel();
 
         sendButton.addActionListener(new ActionListener() {
             @Override
@@ -39,12 +42,8 @@ public class ClientGui extends JFrame {
     }
 
     public void addMessage(String messageText) {
-        JPanel messagePanel = new JPanel();
-        messagePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
         JLabel messageLabel = new JLabel(messageText);
-
-
+        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
         messagePanel.add(messageLabel);
 
 
@@ -53,4 +52,5 @@ public class ClientGui extends JFrame {
         msgScrollPane.revalidate();
         msgScrollPane.getVerticalScrollBar().setValue(msgScrollPane.getVerticalScrollBar().getMaximum());
     }
+
 }
